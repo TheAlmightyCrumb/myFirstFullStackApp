@@ -19,3 +19,23 @@ let products = [
         notes: 'It goes well with the burrito'
     }
 ];
+
+app.get('/products', (req, res) => {
+    res.send(products);
+});
+
+app.get('/products/:productId', (req, res) => {
+    for (let product of products) {
+        if (product.id === req.params.productId) {
+            res.send(product);
+        }
+    }
+});
+
+app.post('/addProduct', (req, res) => {
+    products.push(req.body);
+    res.send(req.body);
+});
+
+
+app.listen(3002);

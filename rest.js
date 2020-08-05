@@ -27,10 +27,16 @@ app.get('/products', (req, res) => {
 
 // Gets a specific item by its id.
 app.get('/product/:productId', (req, res) => {
+    let found = false;
     for (let product of products) {
         if (product.id === req.params.productId) {
             res.send(product);
+            found = true;
         }
+    }
+    if(!found)
+    {
+        res.send('404 no such product');
     }
 });
 
@@ -43,22 +49,34 @@ app.post('/product', (req, res) => {
 
 // Edit an item from the list.
 app.put('/product/:productId', (req, res) => {
+    let found = false;
     products.forEach((product, index) =>{
         if(product.id === req.params.productId) {
             products[index] = req.body;
+            found = true;
             res.send(req.body);
         }
     });
+    if(!found)
+    {
+        res.send('404 no such product');
+    }
 });
 
 // Delete an item from the list.
 app.delete('/product/:productId', (req, res) => {
+    let found = false;
     products.forEach((product, index) => {
         if (product.id === req.params.productId) {
             products.splice(index, 1);
+            found = true;
             res.send(`${req.params.productId} has been deleted`);
         }
     });
+    if(!found)
+    {
+        res.send('404 no such product');
+    }
 });
 
 

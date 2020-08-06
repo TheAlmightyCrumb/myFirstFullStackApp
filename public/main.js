@@ -58,6 +58,8 @@ function addItem(arr){
                 myCollumn2 = document.createElement('div'),
                 mydelButtonOuter = document.createElement('div'),
                 mydelButtonInner = document.createElement('div'),
+                myEditButtonOuter = document.createElement('div'),
+                myEditButtonInner = document.createElement('div'),
                 myName = document.createElement('div'),
                 myAuthor = document.createElement('div'),
                 spanProduct = document.createElement('span'),
@@ -67,7 +69,7 @@ function addItem(arr){
                 spanAuthor2 = document.createElement('span'),
                 spanDescription2 = document.createElement('span'),
                 myDescription = document.createElement('div');
-        
+                
                 //adding classes
                 productListItem.classList.add('productListItem')
                 productListItem.id =`${product.id}Title`;
@@ -80,6 +82,8 @@ function addItem(arr){
                 spanDescription.classList.add('inputSpan2');
                 myCollumn2.classList.add('collumn');
                 mydelButtonOuter.classList.add('area3');
+                myEditButtonOuter.classList.add('area4');
+                myEditButtonInner.id =`${product.id}Edit`;
                 mydelButtonInner.id =`${product.id}`;
                 mydelButtonInner.addEventListener('click',itemDelete);
                 
@@ -89,11 +93,12 @@ function addItem(arr){
                 spanAuthor.innerText = 'For: ';
                 spanDescription.innerText = 'Description: ';
                 mydelButtonInner.innerText = 'Delete';
+                myEditButtonInner.innerText = 'Edit';
                 spanProduct2.innerText = product.id;
                 spanAuthor2.innerText = product.author;
                 spanDescription2.innerText = product.notes;
                 
-                //appending everything
+                //appending everything by Order
                 myName.appendChild(spanProduct);
                 myName.appendChild(spanProduct2);
                 myAuthor.appendChild(spanAuthor);
@@ -101,7 +106,9 @@ function addItem(arr){
                 myDescription.appendChild(spanDescription);
                 myDescription.appendChild(spanDescription2);
                 mydelButtonOuter.appendChild(mydelButtonInner);
+                myEditButtonOuter.appendChild(myEditButtonInner);
                 myCollumn2.appendChild(mydelButtonOuter);
+                myCollumn2.appendChild(myEditButtonOuter);
                 
                 myCollumn.appendChild(myName);
                 myCollumn.appendChild(myAuthor);

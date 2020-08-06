@@ -19,9 +19,11 @@ const onLoad = async() =>{
 function revertRedText(){
     if(!focusedAfterError)
     {
-        this.style.color = "rgb(82, 82, 202);";
-        this.value ='';
+        console.log(productName);
+        productName.style.color = "rgb(82, 82, 202)";
+        productName.value ='';
         focusedAfterError = true;
+        console.log(productName);
     }
 }
 
@@ -39,7 +41,7 @@ async function getItem(){
         myArr[0].notes = productDescription.value;
         myArr[0].author = whoWantsIt.value;
         addItem(myArr);
-        axios.post('http://localhost:3002/product' ,myArr[0]);
+        await axios.post('http://localhost:3002/product' ,myArr[0]);
     }
     else{
         focusedAfterError=false;
@@ -54,6 +56,8 @@ function addItem(arr){
                 const productListItem = document.createElement('div'),
                 myCollumn = document.createElement('div'),
                 myCollumn2 = document.createElement('div'),
+                mydelButtonOuter = document.createElement('div'),
+                mydelButtonInner = document.createElement('div'),
                 myName = document.createElement('div'),
                 myAuthor = document.createElement('div'),
                 spanProduct = document.createElement('span'),
@@ -66,6 +70,7 @@ function addItem(arr){
         
                 //adding classes
                 productListItem.classList.add('productListItem')
+                productListItem.id =`${product.id}Title`;
                 myCollumn.classList.add('collumn');
                 myName.classList.add('inputs');
                 myAuthor.classList.add('inputs');
@@ -73,11 +78,17 @@ function addItem(arr){
                 spanProduct.classList.add('inputSpan2');
                 spanAuthor.classList.add('inputSpan2');
                 spanDescription.classList.add('inputSpan2');
+                myCollumn2.classList.add('collumn');
+                mydelButtonOuter.classList.add('area3');
+                mydelButtonInner.id =`${product.id}`;
+                mydelButtonInner.addEventListener('click',itemDelete);
+                
                 
                 //inserting information
                 spanProduct.innerText = 'Product: ';
                 spanAuthor.innerText = 'For: ';
                 spanDescription.innerText = 'Description: ';
+                mydelButtonInner.innerText = 'Delete';
                 spanProduct2.innerText = product.id;
                 spanAuthor2.innerText = product.author;
                 spanDescription2.innerText = product.notes;
@@ -89,13 +100,22 @@ function addItem(arr){
                 myAuthor.appendChild(spanAuthor2);
                 myDescription.appendChild(spanDescription);
                 myDescription.appendChild(spanDescription2);
-        
+                mydelButtonOuter.appendChild(mydelButtonInner);
+                myCollumn2.appendChild(mydelButtonOuter);
+                
                 myCollumn.appendChild(myName);
                 myCollumn.appendChild(myAuthor);
                 productListItem.appendChild(myCollumn);
                 productListItem.appendChild(myDescription);
+                productListItem.appendChild(myCollumn2);
                 productList.appendChild(productListItem);
                 console.log(productList);
             }); 
+}
+function itemDelete(){
+    delId= this.id;
+    const myItemDel = document.getElementById(`${delId}Title`);
+    productList.removeChild(myItemDel);
+    axios.delete(`http://localhost:3002/product/${delId}`);
 }
 onLoad();

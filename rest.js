@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
-
+app.use(express.static('public'));
 let products = [
     {
         id: 'Pizza',
@@ -23,6 +23,10 @@ let products = [
 // Gets the full grocery-shopping list.
 app.get('/products', (req, res) => {
     res.send(products);
+});
+// sending html page
+app.get('/', (req, res) => {
+    res.send('An alligator approaches!');
 });
 
 // Gets a specific item by its id.

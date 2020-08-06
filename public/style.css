@@ -1,0 +1,98 @@
+.header{
+    text-align: center;
+    height: 100px;
+    font-family: fantasy;
+    background-color: rgb(105, 176, 223);
+    color:rgb(26, 102, 165);
+    font-size: x-large;
+    margin-top: 0;
+    display: flex;
+}
+body{
+    background-color: grey;
+}
+h1{
+    margin: auto;
+}
+.inputs{
+    margin-left: 15px;
+}
+.inputs2{
+    margin-left: 15px;
+    
+}
+input,textarea{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(92, 177, 144);
+    font-family: fantasy ;
+    border-style: dotted;
+    font-size: 17px;
+}
+.inputSpan{
+    font-size: 28px;
+    
+}
+.inputSpan2{
+    /* background-color: darkgreen; */
+    font-size: 23px;
+    color: rgb(146, 64, 64);
+}
+#inputArea{
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(129, 169, 196);
+    color:rgb(58, 118, 167);
+    font-size: large;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.productListItem{
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(191, 194, 196);
+    color:rgb(58, 118, 167);
+    font-size: large;
+    margin: auto;
+    margin-top: 10px;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    
+}
+.collumn{
+    display: flex;
+    justify-content: space-between;
+    
+    align-items: left;
+}
+#area1{
+    margin:auto;
+
+}
+#area2{
+    
+    height: 70px;
+    width:80px;
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+}
+#area2 div{
+    width: 130px;
+    height:35px;
+    font-size: x-large;
+    background-color: darkgreen;
+    border-radius: 50%;
+    padding-top: 5px;
+    text-align: center;
+}
+#area2 div:hover{
+    cursor: pointer;
+}
+#description2{
+    text-align: left;
+}

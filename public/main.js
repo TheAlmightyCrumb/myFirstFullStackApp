@@ -6,7 +6,7 @@ productDescription = document.getElementById('description');
 let productList;
 addButton.addEventListener('click',getItem);
 productName.addEventListener('focus',revertRedText);
-let focusedAfterError;
+let focusedAfterError,inEdit =false;
 const onLoad = async() =>{
     const {data} = await axios.get('http://localhost:3002/products');
     console.log(data);
@@ -15,6 +15,8 @@ const onLoad = async() =>{
     document.body.appendChild(productList);
     console.log(data.length);
     addItem(data);
+    // productName.disabled = true;
+    // productName.value = 'newValue';
 }
 function revertRedText(){
     if(!focusedAfterError)
@@ -65,9 +67,9 @@ function addItem(arr){
                 spanProduct = document.createElement('span'),
                 spanAuthor = document.createElement('span'),
                 spanDescription = document.createElement('span'),
-                spanProduct2 = document.createElement('span'),
-                spanAuthor2 = document.createElement('span'),
-                spanDescription2 = document.createElement('span'),
+                spanProduct2 = document.createElement('input'),
+                spanAuthor2 = document.createElement('input'),
+                spanDescription2 = document.createElement('input'),
                 myDescription = document.createElement('div');
                 
                 //adding classes
@@ -86,6 +88,7 @@ function addItem(arr){
                 myEditButtonInner.id =`${product.id}Edit`;
                 mydelButtonInner.id =`${product.id}`;
                 mydelButtonInner.addEventListener('click',itemDelete);
+                myEditButtonInner.addEventListener('click', itemEdit);
                 
                 
                 //inserting information
@@ -94,9 +97,18 @@ function addItem(arr){
                 spanDescription.innerText = 'Description: ';
                 mydelButtonInner.innerText = 'Delete';
                 myEditButtonInner.innerText = 'Edit';
-                spanProduct2.innerText = product.id;
-                spanAuthor2.innerText = product.author;
-                spanDescription2.innerText = product.notes;
+                spanProduct2.value = product.id;
+                spanAuthor2.value = product.author;
+                spanDescription2.value = product.notes;
+                spanProduct2.id = `${product.id}product`;
+                spanAuthor2.id = `${product.id}author`;
+                spanDescription2.id = `${product.id}description`;
+                spanProduct2.disabled = true;
+                spanAuthor2.disabled = true;
+                spanDescription2.disabled = true;
+                spanProduct2.classList.add('innerInputs');
+                spanAuthor2.classList.add('innerInputs');
+                spanDescription2.classList.add('innerInputs2');
                 
                 //appending everything by Order
                 myName.appendChild(spanProduct);
@@ -124,5 +136,38 @@ function itemDelete(){
     const myItemDel = document.getElementById(`${delId}Title`);
     productList.removeChild(myItemDel);
     axios.delete(`http://localhost:3002/product/${delId}`);
+}
+function itemEdit(){
+    
+    let myProductId = this.id.slice(0,this.id.length-4),
+    inputNameId = myProductId +'product',
+    inputAuthorId = myProductId +'author',
+    inputDescriptionId = myProductId +'description';
+    console.log(inputNameId,inputAuthorId,inputDescriptionId);
+    let myName,myAuthor,myDesc;
+    myName = document.getElementById(inputNameId);
+    myAuthor = document.getElementById(inputAuthorId);
+    myDesc = document.getElementById(inputDescriptionId);
+    if(!inEdit)
+    {
+        inEdit = true;
+    myName.disabled = false;
+    myAuthor.disabled = false;
+    myDesc.disabled = false;
+    myName.style.borderStyle = 'solid';
+    myAuthor.style.borderStyle = 'solid';
+    myDesc.style.borderStyle = 'solid';
+    this.innerText = "Done";
+    }
+    else{
+        inEdit = false;
+        myName.disabled = true;
+        myAuthor.disabled = true;
+        myDesc.disabled = true;
+        myName.style.borderStyle = 'none';
+        myAuthor.style.borderStyle = 'none';
+        myDesc.style.borderStyle = 'none';
+        this.innerText = "Edit";
+    }
 }
 onLoad();

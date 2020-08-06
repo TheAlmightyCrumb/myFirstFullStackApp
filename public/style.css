@@ -21,12 +21,32 @@ h1{
     margin-left: 15px;
     
 }
-input,textarea{
+.myinputfield{
     margin-left: 10px;
     height: 25px;
     background-color: rgb(92, 177, 144);
     font-family: fantasy ;
     border-style: dotted;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputs{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(191, 194, 196);
+    font-family: fantasy ;
+    border-style: none;
+    width : 100px;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputs2{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(191, 194, 196);
+    font-family: fantasy ;
+    border-style: none;
+    width : 540px;
     font-size: 17px;
     color: rgb(82, 82, 202);
 }

@@ -28,6 +28,7 @@ input,textarea{
     font-family: fantasy ;
     border-style: dotted;
     font-size: 17px;
+    color: rgb(82, 82, 202);
 }
 .inputSpan{
     font-size: 28px;
@@ -66,9 +67,14 @@ input,textarea{
 .collumn{
     display: flex;
     justify-content: space-between;
-    
     align-items: left;
 }
+/* .collumn2{
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+} */
 #area1{
     margin:auto;
 
@@ -93,6 +99,30 @@ input,textarea{
 #area2 div:hover{
     cursor: pointer;
 }
-#description2{
+.area3 div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(170, 60, 53);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area3 div:hover{
+    cursor: pointer;
+}
+.area4 div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(53, 123, 170);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area4 div:hover{
+    cursor: pointer;
+}
+.description2{
     text-align: left;
 }

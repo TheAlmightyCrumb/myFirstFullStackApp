@@ -131,6 +131,18 @@ h1{
 .area3 div:hover{
     cursor: pointer;
 }
+.area4B div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(80, 180, 76);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area4B div:hover{
+    cursor: pointer;
+}
 .area4 div{
     width: 100px;
     height:20px;
@@ -145,4 +157,10 @@ h1{
 }
 .description2{
     text-align: left;
+}
+.hidden{
+    display: none;
+}
+.newClass {
+    background-color: rgb(80, 180, 76);
 }

@@ -34,20 +34,32 @@ async function getItem(){
     const {data} = await axios.get('http://localhost:3002/products');
     myArr[0].id = productName.value;
     data.forEach(item => {
-        if(item.id === myArr[0].id || myArr[0].id === 'Already Exists'){
+        if(item.id === myArr[0].id || myArr[0].id === 'Already Exists' || myArr[0].id ===''){
             isOk = false;
         }
     });
+    // if(inEdit){
+    //     focusedAfterError=false;
+    //     productName.value = 'First Finish Your Edit';
+    //     productName.style.color ='rgb(146, 64, 64)';   
+    // }
     if(isOk)
     {
         myArr[0].notes = productDescription.value;
         myArr[0].author = whoWantsIt.value;
         addItem(myArr);
         await axios.post('http://localhost:3002/product' ,myArr[0]);
+        productDescription.value = '';
+        whoWantsIt.value = '';
+        productName.value ='';
     }
     else{
         focusedAfterError=false;
-        productName.value = 'Already Exists';
+        if(productName.value === ''){
+            productName.value = 'Insert Name';
+        }else{
+            productName.value = 'Already Exists';
+        }
         productName.style.color ='rgb(146, 64, 64)';
     }
 }
@@ -86,10 +98,13 @@ function addItem(arr){
                 mydelButtonOuter.classList.add('area3');
                 myEditButtonOuter.classList.add('area4');
                 myEditButtonInner.id =`${product.id}Edit`;
+                myEditButtonInner.classList.add('myEdits');
+                if(inEdit){
+                    myEditButtonInner.classList.add('hidden');
+                }
                 mydelButtonInner.id =`${product.id}`;
                 mydelButtonInner.addEventListener('click',itemDelete);
                 myEditButtonInner.addEventListener('click', itemEdit);
-                
                 
                 //inserting information
                 spanProduct.innerText = 'Product: ';
@@ -137,8 +152,29 @@ function itemDelete(){
     productList.removeChild(myItemDel);
     axios.delete(`http://localhost:3002/product/${delId}`);
 }
-function itemEdit(){
-    
+function editAction(action,myCurrentEdit){
+    const myEditArr = document.getElementsByClassName('myEdits');
+    console.log(myEditArr);
+    if(action === 'Hide'){
+        Array.from(myEditArr).forEach(edit =>{
+            if(edit.id !== myCurrentEdit.id)
+                {
+                    console.log('Hiding');
+                    edit.classList.add('hidden');
+                }
+        })
+    }
+    else if( action === 'Show'){
+        Array.from(myEditArr).forEach(edit =>{
+        if(edit.id !== myCurrentEdit.id)
+                {
+                    console.log('Hiding');
+                    edit.classList.remove('hidden');
+                }
+            });
+    }
+}
+async function itemEdit(){
     let myProductId = this.id.slice(0,this.id.length-4),
     inputNameId = myProductId +'product',
     inputAuthorId = myProductId +'author',
@@ -148,8 +184,21 @@ function itemEdit(){
     myName = document.getElementById(inputNameId);
     myAuthor = document.getElementById(inputAuthorId);
     myDesc = document.getElementById(inputDescriptionId);
+    console.log('mys ->' ,myName, myAuthor, myDesc);
+    myActualName = myName.value;
+    console.log(myActualName);
+    const {data} = await axios.get('http://localhost:3002/products');
+    let isOk2 = true; 
+    data.forEach(item => {
+        if(item.id === myActualName || myActualName === 'Already Exists'){
+            isOk2 = false;
+        }
+    });
     if(!inEdit)
     {
+        editAction('Hide',this);
+        this.parentNode.classList.remove('area4');
+        this.parentNode.classList.add('area4B');
         inEdit = true;
     myName.disabled = false;
     myAuthor.disabled = false;
@@ -159,7 +208,7 @@ function itemEdit(){
     myDesc.style.borderStyle = 'solid';
     this.innerText = "Done";
     }
-    else{
+    else if(myActualName === myProductId || isOk2){
         inEdit = false;
         myName.disabled = true;
         myAuthor.disabled = true;
@@ -168,6 +217,27 @@ function itemEdit(){
         myAuthor.style.borderStyle = 'none';
         myDesc.style.borderStyle = 'none';
         this.innerText = "Edit";
+        this.parentNode.classList.remove('area4B');
+        this.parentNode.classList.add('area4');
+        
+            let myObj = {}, newName = myName.value;
+            console.log(newName);
+            myObj.id = newName;
+            myObj.author = myAuthor.value;
+            myObj.notes = myDesc.value;
+            console.log(myObj);
+            axios.put(`http://localhost:3002/product/${myProductId}`,myObj);
+            myName.id = newName+'product';
+            myAuthor.id = newName+'author';
+            myDesc.id = newName+'description';
+            this.id = newName+'Edit';
+            let myDelete = document.getElementById(myProductId);
+            myDelete.id = newName;
+            console.log(this);
+            editAction('Show',this);
+    }
+    else{
+        window.prompt('name already exists');
     }
 }
 onLoad();

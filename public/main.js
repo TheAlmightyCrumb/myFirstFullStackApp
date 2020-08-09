@@ -188,7 +188,7 @@ function addItem(arr){
 function itemDelete(){
     delId= this.id;
     const myItemDel = document.getElementById(`${delId}Title`);
-    productList.removeChild(myItemDel);
+    myItemDel.parentNode.removeChild(myItemDel);
     axios.delete(`http://localhost:3002/product/${delId}`);
 }
 function editAction(action,myCurrentEdit){

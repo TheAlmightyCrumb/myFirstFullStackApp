@@ -3,7 +3,7 @@ let addButton = document.getElementById('addBtn'),
 productName = document.getElementById('name'),
 whoWantsIt = document.getElementById('author'),
 productDescription = document.getElementById('description');
-let productList;
+let productList,finishContainer;
 addButton.addEventListener('click',getItem);
 productName.addEventListener('focus',revertRedText);
 let focusedAfterError,inEdit =false;
@@ -11,21 +11,31 @@ const onLoad = async() =>{
     const {data} = await axios.get('http://localhost:3002/products');
     console.log(data);
     productList = document.createElement('div');
+    finishContainer = document.createElement('div');
+    cartHeader = document.createElement('div');
+    cartHeader.innerText ='My Cart';
+    cartHeader.id='myCartHeader';
+    finishContainer.appendChild(cartHeader);
+    finishContainer.id = 'finishContainer';
+    finishContainer.style.marginTop = '30px';
     productList.id= "productContainer";
     document.body.appendChild(productList);
+    document.body.appendChild(finishContainer);
     console.log(data.length);
     addItem(data);
     // productName.disabled = true;
     // productName.value = 'newValue';
 }
 function revertRedText(){
-    if(!focusedAfterError)
+    console.log(this);
+    if(this.value === '*Insert Name'
+    || this.value === '*Already Exists')
     {
-        console.log(productName);
-        productName.style.color = "rgb(82, 82, 202)";
-        productName.value ='';
+        console.log(this);
+        this.style.color = "rgb(82, 82, 202)";
+        this.value ='';
         focusedAfterError = true;
-        console.log(productName);
+        console.log(this);
     }
 }
 
@@ -34,7 +44,8 @@ async function getItem(){
     const {data} = await axios.get('http://localhost:3002/products');
     myArr[0].id = productName.value;
     data.forEach(item => {
-        if(item.id === myArr[0].id || myArr[0].id === 'Already Exists' || myArr[0].id ===''){
+        if(item.id === myArr[0].id || myArr[0].id === '*Already Exists' || myArr[0].id ===''
+        || myArr[0].id ==='*Insert Name'){
             isOk = false;
         }
     });
@@ -55,10 +66,11 @@ async function getItem(){
     }
     else{
         focusedAfterError=false;
-        if(productName.value === ''){
-            productName.value = 'Insert Name';
+        if(productName.value === '' || productName.value === '*Insert Name'
+        || productName.value === '*Already Exists'){
+            productName.value = '*Insert Name';
         }else{
-            productName.value = 'Already Exists';
+            productName.value = '*Already Exists';
         }
         productName.style.color ='rgb(146, 64, 64)';
     }
@@ -72,6 +84,9 @@ function addItem(arr){
                 myCollumn2 = document.createElement('div'),
                 mydelButtonOuter = document.createElement('div'),
                 mydelButtonInner = document.createElement('div'),
+                myDivCont = document.createElement('div'),
+                myFinishButtonOuter = document.createElement('div'),
+                myFinishButtonInner = document.createElement('div'),
                 myEditButtonOuter = document.createElement('div'),
                 myEditButtonInner = document.createElement('div'),
                 myName = document.createElement('div'),
@@ -85,7 +100,6 @@ function addItem(arr){
                 myDescription = document.createElement('div');
                 
                 //adding classes
-                productListItem.classList.add('productListItem')
                 productListItem.id =`${product.id}Title`;
                 myCollumn.classList.add('collumn');
                 myName.classList.add('inputs');
@@ -97,7 +111,11 @@ function addItem(arr){
                 myCollumn2.classList.add('collumn');
                 mydelButtonOuter.classList.add('area3');
                 myEditButtonOuter.classList.add('area4');
+                myFinishButtonOuter.classList.add('area4');
+                myFinishButtonInner.style.marginLeft = '10px';
+                myDivCont.style.display = 'flex';
                 myEditButtonInner.id =`${product.id}Edit`;
+                myFinishButtonInner.id =`${product.id}Finish`;
                 myEditButtonInner.classList.add('myEdits');
                 if(inEdit){
                     myEditButtonInner.classList.add('hidden');
@@ -105,6 +123,8 @@ function addItem(arr){
                 mydelButtonInner.id =`${product.id}`;
                 mydelButtonInner.addEventListener('click',itemDelete);
                 myEditButtonInner.addEventListener('click', itemEdit);
+                myFinishButtonInner.addEventListener('click', itemFinish);
+                spanProduct2.addEventListener('focus',revertRedText);
                 
                 //inserting information
                 spanProduct.innerText = 'Product: ';
@@ -121,9 +141,6 @@ function addItem(arr){
                 spanProduct2.disabled = true;
                 spanAuthor2.disabled = true;
                 spanDescription2.disabled = true;
-                spanProduct2.classList.add('innerInputs');
-                spanAuthor2.classList.add('innerInputs');
-                spanDescription2.classList.add('innerInputs2');
                 
                 //appending everything by Order
                 myName.appendChild(spanProduct);
@@ -134,15 +151,37 @@ function addItem(arr){
                 myDescription.appendChild(spanDescription2);
                 mydelButtonOuter.appendChild(mydelButtonInner);
                 myEditButtonOuter.appendChild(myEditButtonInner);
+                myFinishButtonOuter.appendChild(myFinishButtonInner);
+                myDivCont.appendChild(myEditButtonOuter);
+                myDivCont.appendChild(myFinishButtonOuter);
                 myCollumn2.appendChild(mydelButtonOuter);
-                myCollumn2.appendChild(myEditButtonOuter);
+                myCollumn2.appendChild(myDivCont);
                 
                 myCollumn.appendChild(myName);
                 myCollumn.appendChild(myAuthor);
                 productListItem.appendChild(myCollumn);
                 productListItem.appendChild(myDescription);
                 productListItem.appendChild(myCollumn2);
-                productList.appendChild(productListItem);
+
+                if(product.finished ==='true'){
+                    spanProduct2.classList.add('innerInputsF');
+                    spanAuthor2.classList.add('innerInputsF');
+                    spanDescription2.classList.add('innerInputs2F');
+                    productListItem.classList.add('productListItemF');
+                    myFinishButtonInner.style.backgroundColor = 'rgb(49, 210, 221)';
+                    myFinishButtonInner.innerText = 'Undo';
+                    finishContainer.appendChild(productListItem);
+                }
+                else{
+                    spanProduct2.classList.add('innerInputs');
+                    spanAuthor2.classList.add('innerInputs');
+                    spanDescription2.classList.add('innerInputs2');
+                    productListItem.classList.add('productListItem');
+                    myFinishButtonInner.style.backgroundColor = 'rgb(221, 221, 49)';
+                    myFinishButtonInner.innerText = 'Got It !';
+                    productList.appendChild(productListItem);
+                }
+
                 console.log(productList);
             }); 
 }
@@ -190,7 +229,8 @@ async function itemEdit(){
     const {data} = await axios.get('http://localhost:3002/products');
     let isOk2 = true; 
     data.forEach(item => {
-        if(item.id === myActualName || myActualName === 'Already Exists'){
+        if(item.id === myActualName || myActualName === '*Already Exists' 
+        || myActualName === '*Insert Name' || myActualName === ''){
             isOk2 = false;
         }
     });
@@ -231,13 +271,70 @@ async function itemEdit(){
             myAuthor.id = newName+'author';
             myDesc.id = newName+'description';
             this.id = newName+'Edit';
-            let myDelete = document.getElementById(myProductId);
+            let myDelete = document.getElementById(myProductId),
+            myFinish = document.getElementById(`${myProductId}Finish`);
+            const myItemContainer = document.getElementById(`${myProductId}Title`);
             myDelete.id = newName;
+            myFinish.id = newName+'Finish';
+            myItemContainer.id = newName+'Title'
             console.log(this);
             editAction('Show',this);
     }
     else{
-        window.prompt('name already exists');
+        if(myName.value === '' || myName.value === '*Insert Name'
+            || myName.value === '*Already Exists'){
+            myName.value = '*Insert Name';
+            myName.style.color ='rgb(146, 64, 64)';
+        }else{
+            myName.value = '*Already Exists';
+            myName.style.color ='rgb(146, 64, 64)';
+        }
     }
 }
+
+function itemFinish(){
+    const myProduct = this.id.slice(0,this.id.length-6),
+    spanProduct2 = document.getElementById(`${myProduct}product`),
+    spanAuthor2 = document.getElementById(`${myProduct}author`),
+    spanDescription2 = document.getElementById(`${myProduct}description`);
+    
+    const myContainer = document.getElementById(`${myProduct}Title`);
+    console.log(myContainer);
+    if(this.innerText === 'Undo')
+    {
+        spanProduct2.classList.remove('innerInputsF');
+        spanAuthor2.classList.remove('innerInputsF');
+        spanDescription2.classList.remove('innerInputs2F');
+        myContainer.classList.remove('productListItemF');
+
+        spanProduct2.classList.add('innerInputs');
+        spanAuthor2.classList.add('innerInputs');
+        spanDescription2.classList.add('innerInputs2');
+        myContainer.classList.add('productListItem');
+
+        this.style.backgroundColor = 'rgb(221, 221, 49)';
+        this.innerText = 'Got It !';
+        axios.put(`http://localhost:3002/product/${myProduct}/false`);
+        productList.appendChild(myContainer);
+    }else{
+        spanProduct2.classList.remove('innerInputs');
+        spanAuthor2.classList.remove('innerInputs');
+        spanDescription2.classList.remove('innerInputs2');
+        myContainer.classList.remove('productListItem');
+
+        spanProduct2.classList.add('innerInputsF');
+        spanAuthor2.classList.add('innerInputsF');
+        spanDescription2.classList.add('innerInputs2F');
+        myContainer.classList.add('productListItemF');
+
+        this.style.backgroundColor = 'rgb(49, 210, 221)';
+        this.innerText = 'Undo';
+        axios.put(`http://localhost:3002/product/${myProduct}/true`);
+        finishContainer.appendChild(myContainer);
+    }
+
+
+}
+
+
 onLoad();

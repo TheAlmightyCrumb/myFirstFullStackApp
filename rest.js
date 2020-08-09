@@ -6,17 +6,20 @@ let products = [
     {
         id: 'Pizza',
         author: 'Maggie',
-        notes: 'NO VEGAN CHEESE!!!'
+        notes: 'NO VEGAN CHEESE!!!',
+        finished: 'true'
     },
     {
         id: 'Tortillas',
         author: 'Ben',
-        notes: 'Get the burrito-sized ones'
+        notes: 'Get the burrito-sized ones',
+        finished: 'true'
     },
     {
         id: 'Black Rum',
         author: 'Ben',
-        notes: 'It goes well with the burrito'
+        notes: 'It goes well with the burrito',
+        finished: 'false'
     }
 ];
 
@@ -56,7 +59,39 @@ app.put('/product/:productId', (req, res) => {
     let found = false;
     products.forEach((product, index) =>{
         if(product.id === req.params.productId) {
-            products[index] = req.body;
+            products[index].id = req.body.id;
+            products[index].author = req.body.author;
+            products[index].notes = req.body.notes;
+            found = true;
+            res.send(req.body);
+        }
+    });
+    if(!found)
+    {
+        res.send('404 no such product');
+    }
+});
+// make finished true
+app.put('/product/:productId/true', (req, res) => {
+    let found = false;
+    products.forEach((product, index) =>{
+        if(product.id === req.params.productId) {
+            products[index].finished = 'true';
+            found = true;
+            res.send(req.body);
+        }
+    });
+    if(!found)
+    {
+        res.send('404 no such product');
+    }
+});
+// make finish false
+app.put('/product/:productId/false', (req, res) => {
+    let found = false;
+    products.forEach((product, index) =>{
+        if(product.id === req.params.productId) {
+            products[index].finished = 'false';
             found = true;
             res.send(req.body);
         }

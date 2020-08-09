@@ -1,0 +1,212 @@
+.header{
+    text-align: center;
+    height: 100px;
+    font-family: fantasy;
+    background-color: rgb(105, 176, 223);
+    color:rgb(26, 102, 165);
+    font-size: x-large;
+    margin-top: 0;
+    display: flex;
+}
+body{
+    background-color: grey;
+}
+h1{
+    margin: auto;
+}
+.inputs{
+    margin-left: 15px;
+}
+.inputs2{
+    margin-left: 15px;
+    
+}
+.myinputfield{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(92, 177, 144);
+    font-family: fantasy ;
+    border-style: dotted;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputs{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(191, 194, 196);
+    font-family: fantasy ;
+    border-style: none;
+    width : 100px;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputs2{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(191, 194, 196);
+    font-family: fantasy ;
+    border-style: none;
+    width : 540px;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputsF{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(49, 221, 86);
+    font-family: fantasy ;
+    border-style: none;
+    width : 100px;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.innerInputs2F{
+    margin-left: 10px;
+    height: 25px;
+    background-color: rgb(49, 221, 86);
+    font-family: fantasy ;
+    border-style: none;
+    width : 540px;
+    font-size: 17px;
+    color: rgb(82, 82, 202);
+}
+.inputSpan{
+    font-size: 28px;
+    
+}
+.inputSpan2{
+    /* background-color: darkgreen; */
+    font-size: 23px;
+    color: rgb(146, 64, 64);
+}
+#inputArea{
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(129, 169, 196);
+    color:rgb(58, 118, 167);
+    font-size: large;
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.productListItem{
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(191, 194, 196);
+    color:rgb(58, 118, 167);
+    font-size: large;
+    margin: auto;
+    margin-top: 10px;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    
+}
+#myCartHeader{
+    display: flex;
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(64, 145, 199);
+    color:rgb(40, 82, 116);
+    font-size: 25px;
+    text-align: center;
+    justify-content: center;
+    margin: auto;
+    width: 900px;
+}
+.productListItemF{
+    font-family: fantasy;
+    height: fit-content;
+    background-color: rgb(49, 221, 86);
+    color:rgb(58, 118, 167);
+    font-size: large;
+    margin: auto;
+    margin-top: 10px;
+    width: 700px;
+    display: flex;
+    flex-direction: column;
+    /* text-align: center; */
+    
+}
+.collumn{
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+}
+/* .collumn2{
+    display: flex;
+    justify-content: right;
+    align-items: right;
+    text-align: right;
+} */
+#area1{
+    margin:auto;
+
+}
+#area2{
+    
+    height: 70px;
+    width:80px;
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+}
+#area2 div{
+    width: 130px;
+    height:35px;
+    font-size: x-large;
+    background-color: darkgreen;
+    border-radius: 50%;
+    padding-top: 5px;
+    text-align: center;
+}
+#area2 div:hover{
+    cursor: pointer;
+}
+.area3 div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(170, 60, 53);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area3 div:hover{
+    cursor: pointer;
+}
+.area4B div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(80, 180, 76);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area4B div:hover{
+    cursor: pointer;
+}
+.area4 div{
+    width: 100px;
+    height:20px;
+    font-size: large;
+    background-color: rgb(53, 123, 170);
+    border-radius: 50%;
+    color:black;
+    text-align: center;
+}
+.area4 div:hover{
+    cursor: pointer;
+}
+.description2{
+    text-align: left;
+}
+.hidden{
+    display: none;
+}
+.newClass {
+    background-color: rgb(80, 180, 76);
+}

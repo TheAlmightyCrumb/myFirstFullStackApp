@@ -43,9 +43,12 @@ async function getItem(){
     let myArr = [{}], isOk = true;;
     const {data} = await axios.get('http://localhost:3002/products');
     myArr[0].id = productName.value;
-    data.forEach(item => {
-        if(item.id === myArr[0].id || myArr[0].id === '*Already Exists' || myArr[0].id ===''
+    if(myArr[0].id === '*Already Exists' || myArr[0].id ===''
         || myArr[0].id ==='*Insert Name'){
+            isOk = false;
+        }
+    data.forEach(item => {
+        if(item.id === myArr[0].id){
             isOk = false;
         }
     });
